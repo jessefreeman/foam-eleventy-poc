@@ -7,7 +7,7 @@ Thumbs.db
 _site/
 
 # Ignore node_modules in the .eleventy folder
-.eleventy/node_modules/
+node_modules/
 
 # Log files
 npm-debug.log*

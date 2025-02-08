@@ -1,16 +1,18 @@
-module.exports = function (eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("../posts/**/*.png");
-  eleventyConfig.addPassthroughCopy("../posts/**/*.jpg");
-  eleventyConfig.addPassthroughCopy("assets");
+const CleanCSS = require("clean-css");
+const postcss = require('postcss')
+const precss = require('precss')
+
+module.exports = function(eleventyConfig) {
+
+  eleventyConfig.addFilter("date", require("./filters/dates.js") );
 
   return {
-    markdownTemplateEngine: false, // Disable Liquid/Nunjucks processing in Markdown
-    htmlTemplateEngine: "liquid",    // Still process your layouts as Liquid
     dir: {
-      input: "../posts",           // from .eleventy folder, go up to posts
-      includes: "../.eleventy/_includes",
-      layouts: "../.eleventy/_layouts",
-      output: "../_site"
-    }
+      input: "site",
+      output: "_site",
+      data: "_data"
+    },
+    feed: process.env.MEDIUM_FEED ||'https://medium.com/feed/netlify'
   };
+
 };
