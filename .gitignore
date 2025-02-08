@@ -1,0 +1,18 @@
+# Ignore temporary files
+*.log
+.DS_Store
+Thumbs.db
+
+# Ignore generated site output
+_site/
+
+# Ignore node_modules in the .eleventy folder
+.eleventy/node_modules/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore trash
+trash

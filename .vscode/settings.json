@@ -1,0 +1,45 @@
+{
+  "files.autoSave": "onFocusChange",
+  "editor.wrappingIndent": "indent",
+  "editor.lineHeight": 24,
+  "foam.edit.linkReferenceDefinitions": "withExtensions",
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+  "git.enableSmartCommit": true,
+  "git.postCommitCommand": "sync",
+  "files.exclude": {
+    "_site/**": true,
+    "**/.foam": true,
+    "**/.vscode": true,
+    "**/.gitignore": true,
+    "**/.git": true
+  },
+  "files.insertFinalNewline": true,
+  "markdown.styles": [".vscode/custom-tag-style.css"],
+  "workbench.statusBar.visible": false,   // Hide Status Bar (bottom info bar)
+  "workbench.tips.enabled": false,        // Disable startup tips
+  "editor.minimap.enabled": false,        // Hide minimap in the editor
+  "editor.overviewRulerBorder": false,    // Hide scrollbar ruler border
+  "editor.renderLineHighlight": "none",   // Remove line highlight
+  "editor.glyphMargin": false,            // Hide left-side marker column
+  "workbench.editor.showTabs": "multiple",     // Hide editor tabs
+  "workbench.panel.defaultLocation": "bottom", // Keep bottom panel hidden unless needed
+  "extensions.ignoreRecommendations": true, // Prevent extension prompts
+  "workbench.statusBar.feedback.visible": false, // Hide feedback button
+  "editor.showFoldingControls": "never", // Remove folding icons
+  "editor.hover.enabled": false, // Disable hover tooltips
+  "editor.codeLens": false, // Remove inline code hints
+  "editor.inlayHints.enabled": "off", // Disable parameter hints in the editor
+  "git.enabled": true, // Hide Git status items
+  "debug.showInStatusBar": "never",
+  "gitdoc.enabled": true, // Hide debug status items
+  "foam.openDailyNote.directory": "inbox/${FOAM_DATE_YEAR}/${FOAM_DATE_MONTH}/",
+  "foam.openDailyNote.filenameFormat": "'daily-note'-yyyy-mm-dd",
+  "foam.openDailyNote.fileExtension": "md",
+  "foam.openDailyNote.titleFormat": "'Notes on ' dddd, mmmm d"
+}

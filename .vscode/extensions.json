@@ -1,0 +1,33 @@
+{
+  "recommendations": [
+    // Foam's own extension (version 0.25.12 is installed automatically due to compatibility issues in code-server)
+    "foam.foam-vscode",
+
+    // Tons of markdown goodies (lists, tables of content, so much more)
+    "yzhang.markdown-all-in-one",
+
+    // Prettier for auto formatting code
+    "esbenp.prettier-vscode",
+
+    // Spell checker for markdown content
+    "streetsidesoftware.code-spell-checker",
+
+    // File and folder icons
+    "scalet.let-icons",
+
+    // Word count for Markdown and Quarto
+    "yunierolivera.markdown-quarto-word-count",
+
+    // Full-featured WYSIWYG Markdown editor
+    "zaaack.markdown-editor",
+
+    // Handy text transformation tools
+    "carlocardella.vscode-texttoolbox",
+
+    // Expands Markdown links in editor
+    "skn0tt.markdown-link-expander",
+
+    // Git-backed collaborative documentation
+    "vsls-contrib.gitdoc"
+  ]
+}

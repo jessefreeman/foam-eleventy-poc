@@ -1,0 +1,11 @@
+{
+  "name": "my-eleventy",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "eleventy --serve -c .eleventy.js"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}
