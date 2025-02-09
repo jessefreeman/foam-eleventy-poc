@@ -12,10 +12,10 @@ title: Articles
 <ul class="listing">
 {% for item in medium.posts %}
   <li>
-    <p class="meta">Published on {{ item.date | date('friendly') }}</p>
     <h3>
       <a href="{{ item.path | url }}">{{ item.title }}</a>
     </h3>
+    <p class="meta">Published on {{ item.date | date('friendly') }}</p>
   </li>
 {% endfor %}
 </ul>
