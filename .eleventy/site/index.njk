@@ -13,7 +13,7 @@ title: Articles
 {% for item in medium.posts %}
   <li>
     <p class="meta">Published on {{ item.date | date('friendly') }}</p>
-    <h3>{{ item.path | url }}
+    <h3>
       <a href="{{ item.path | url }}">{{ item.title }}</a>
     </h3>
   </li>
