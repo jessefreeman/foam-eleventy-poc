@@ -22,11 +22,11 @@ module.exports = () => {
           date: data.date,
           tags: data.tags || [],
           content,
-          path: `/posts/${data.date.toISOString().split("T")[0]}/${file
+          path: `./posts/${data.date.toISOString().split("T")[0]}/${file
             .replace(postsDir, "")
             .replace(/\\/g, "/")
-            .replace(/\/\d{4}-\d{2}-\d{2}\//, "") // Remove date folders
-            .replace(".md", "")}`, // Keep slug only
+            .replace(/\/\d{4}-\d{2}-\d{2}\//, "")
+            .replace(".md", "/")}`,
         });
         
         
