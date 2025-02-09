@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
+const markdownIt = require("markdown-it");
+const md = new markdownIt();
 
 const postsDir = path.resolve(__dirname, "../../../posts");
 
@@ -21,7 +23,7 @@ module.exports = () => {
           title: data.title,
           date: data.date,
           tags: data.tags || [],
-          content,
+          content: md.render(content),
           path: `./posts/${data.date.toISOString().split("T")[0]}/${file
             .replace(postsDir, "")
             .replace(/\\/g, "/")
