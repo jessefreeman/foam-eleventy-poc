@@ -3,19 +3,22 @@ layout: layouts/base.njk
 title: Articles
 ---
 
-<h1>Medium to Small JAMstack</h1>
-<p>This site features articles from Markdown files and renders them correctly for the proxy.</p>
+<h1>All Posts</h1>
 
-<hr/>
-
-<h2>Articles</h2>
 <ul class="listing">
-{% for item in medium.posts %}
-  <li>
-    <h3>
-      <a href="{{ item.path | url }}">{{ item.title }}</a>
-    </h3>
-    <p class="meta">Published on {{ item.date | date('friendly') }}</p>
-  </li>
-{% endfor %}
+  {% for item in medium.posts %}
+    <li class="post-preview">
+      <p class="meta">{{ item.date | date('D MMM YYYY') }} | {{ item.readTime }}</p>
+      <h2>
+        <a href="{{ item.path | url }}">{{ item.title }}</a>
+      </h2>
+      <p class="tags">
+        {% for tag in item.tags %}
+          <span>#{{ tag }}</span>
+        {% endfor %}
+      </p>
+      <p class="excerpt">{{ item.excerpt }}</p>
+      <a href="{{ item.path | url }}">Read Article</a>
+    </li>
+  {% endfor %}
 </ul>
