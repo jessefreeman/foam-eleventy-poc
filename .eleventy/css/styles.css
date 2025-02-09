@@ -65,8 +65,10 @@ hr {
   margin-top: 2em;
   margin-bottom: 3em;
 }
+
 .post-content img {
-  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 p.meta {

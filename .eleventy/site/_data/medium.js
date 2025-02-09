@@ -6,41 +6,65 @@ const md = new markdownIt();
 
 const postsDir = path.resolve(__dirname, "../../../posts");
 
+// Helper: copy images referenced in HTML
+function copyReferencedImages(html, postSourceDir, postOutputDir) {
+  const imageRegex = /<img[^>]+src=["']([^"']+)["']/g;
+  let match;
+  while ((match = imageRegex.exec(html)) !== null) {
+    const imgSrc = match[1];
+    // Only process relative paths
+    if (!imgSrc.startsWith("http")) {
+      const srcImage = path.join(postSourceDir, imgSrc);
+      const destImage = path.join(postOutputDir, imgSrc);
+      fs.mkdirSync(path.dirname(destImage), { recursive: true });
+      try {
+        fs.copyFileSync(srcImage, destImage);
+      } catch (err) {
+        console.error(`Failed to copy ${srcImage} to ${destImage}:`, err);
+      }
+    }
+  }
+}
+
 module.exports = () => {
   const posts = [];
 
   const getFiles = (dir) => {
-    fs.readdirSync(dir).forEach((file) => {
+    fs.readdirSync(dir).forEach(file => {
       const fullPath = path.join(dir, file);
       if (fs.statSync(fullPath).isDirectory()) {
-        getFiles(fullPath); // Recurse into subdirectories
+        getFiles(fullPath);
       } else if (file.endsWith(".md")) {
         const fileContents = fs.readFileSync(fullPath, "utf-8");
         const { data, content } = matter(fileContents);
+        const renderedHtml = md.render(content);
 
-        // Generate a clean path relative to /posts/
+        // Compute a post slug & date folder
+        const slug = file
+          .replace(postsDir, "")
+          .replace(/\\/g, "/")
+          .replace(/\/\d{4}-\d{2}-\d{2}\//, "")
+          .replace(".md", "");
+        const datePart = data.date.toISOString().split("T")[0];
+        // Compute output folder (adjust relative to your _site folder)
+        const postOutputDir = path.resolve(__dirname, "../../_site", "posts", datePart, slug);
+
+        // Copy only images referenced in the HTML from the markdown file's folder.
+        const postSourceDir = path.dirname(fullPath);
+        copyReferencedImages(renderedHtml, postSourceDir, postOutputDir);
+
         posts.push({
           title: data.title,
           date: data.date,
           tags: data.tags || [],
-          content: md.render(content),
-          path: `./posts/${data.date.toISOString().split("T")[0]}/${file
-            .replace(postsDir, "")
-            .replace(/\\/g, "/")
-            .replace(/\/\d{4}-\d{2}-\d{2}\//, "")
-            .replace(".md", "/")}`,
+          content: renderedHtml,
+          path: `./posts/${datePart}/${slug}/`
         });
-        
-        
       }
     });
   };
 
   getFiles(postsDir);
-
   posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-  return {
-    posts,
-  };
+  return { posts };
 };
