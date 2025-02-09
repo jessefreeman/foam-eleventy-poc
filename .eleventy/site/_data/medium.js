@@ -6,6 +6,12 @@ const md = new markdownIt();
 
 const postsDir = path.resolve(__dirname, "../../../posts");
 
+// Function to generate an excerpt
+function generateExcerpt(content, wordLimit = 30) {
+  const words = content.split(/\s+/).slice(0, wordLimit).join(" ");
+  return words + "...";
+}
+
 // Helper: copy images referenced in HTML
 function copyReferencedImages(html, postSourceDir, postOutputDir) {
   const imageRegex = /<img[^>]+src=["']([^"']+)["']/g;
@@ -38,27 +44,15 @@ module.exports = () => {
         const fileContents = fs.readFileSync(fullPath, "utf-8");
         const { data, content } = matter(fileContents);
         const renderedHtml = md.render(content);
-
-        // Compute a post slug & date folder
-        const slug = file
-          .replace(postsDir, "")
-          .replace(/\\/g, "/")
-          .replace(/\/\d{4}-\d{2}-\d{2}\//, "")
-          .replace(".md", "");
-        const datePart = data.date.toISOString().split("T")[0];
-        // Compute output folder (adjust relative to your _site folder)
-        const postOutputDir = path.resolve(__dirname, "../../_site", "posts", datePart, slug);
-
-        // Copy only images referenced in the HTML from the markdown file's folder.
-        const postSourceDir = path.dirname(fullPath);
-        copyReferencedImages(renderedHtml, postSourceDir, postOutputDir);
+        const excerpt = generateExcerpt(content);
 
         posts.push({
           title: data.title,
           date: data.date,
           tags: data.tags || [],
-          content: renderedHtml,
-          path: `./posts/${datePart}/${slug}/`
+          excerpt: excerpt,
+          readTime: Math.ceil(content.split(" ").length / 200) + " min read",
+          path: `./posts/${data.date.toISOString().split("T")[0]}/${file.replace(".md", "")}/`
         });
       }
     });
