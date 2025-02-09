@@ -1,8 +1,8 @@
 /*
-  A date formatter filter for Nunjucks
+  Date Formatter Filter for Nunjucks
 */
-module.exports = function(date) {
-  var month = [
+module.exports = function(date, format = "friendly") {
+  const month = [
     "January",
     "February",
     "March",
@@ -16,15 +16,26 @@ module.exports = function(date) {
     "November",
     "December"
   ];
-  var ordinal = {
-    1 : "st",
-    2 : "nd",
-    3 : "rd",
-    21 : "st",
-    22 : "nd",
-    23 : "rd",
-    31 : "st"
+  const ordinal = {
+    1: "st",
+    2: "nd",
+    3: "rd",
+    21: "st",
+    22: "nd",
+    23: "rd",
+    31: "st"
   };
-  var d = new Date(date);
-  return month[d.getMonth()] + " " + d.getDate() + (ordinal[d.getDate()] || "th") + " " +d.getUTCFullYear();
-}
+
+  const d = new Date(date);
+
+  if (format === "iso") {
+    // Return date in YYYY-MM-DD format
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  // Default to "friendly" format
+  return month[d.getMonth()] + " " + d.getDate() + (ordinal[d.getDate()] || "th") + " " + d.getUTCFullYear();
+};

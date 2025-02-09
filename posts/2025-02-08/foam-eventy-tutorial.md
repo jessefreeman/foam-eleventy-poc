@@ -1,10 +1,9 @@
 ---
-layout: default
+layout: layouts/base.njk
 title: "Foam Eventy Tutorial"
 date: 2025-02-08
 tags: [blog, unsorted]
 ---
-
 ## Setting Up Foam with Eleventy for Blogging
 
 This tutorial walks you through setting up a blogging system using Foam and Eleventy. Follow these steps to reproduce the setup.

@@ -8,6 +8,7 @@ module.exports = function(eleventyConfig) {
 
   return {
     dir: {
+      pathPrefix: "/@jessefreeman/foam-eleventy-mvp.main/apps/code-server/proxy/8080",
       input: "site",
       output: "_site",
       data: "_data"

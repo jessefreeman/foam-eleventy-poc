@@ -1,33 +1,44 @@
-var axios = require('axios');
-var toJSON = require('xml2js').parseString;
+const fs = require("fs");
+const path = require("path");
+const matter = require("gray-matter");
 
-var url = process.env.MEDIUM_FEED || 'https://medium.com/feed/netlify';
+const postsDir = path.resolve(__dirname, "../../../posts");
 
 module.exports = () => {
-  return new Promise((resolve, reject) => {
-    axios.get(url)
-      .then((response) => {
-        // Turn the feed XML into JSON
-        toJSON(response.data, function (err, result) {
-          if (err) {
-            reject(err);
-            return;
-          }
+  const posts = [];
 
-          // Create a clean path for each item
-          result.rss.channel[0].item.forEach(element => {
-            var urlParts = element.link[0].split('/');
-            var slug = urlParts[urlParts.length - 1].split('?')[0];
+  const getFiles = (dir) => {
+    fs.readdirSync(dir).forEach((file) => {
+      const fullPath = path.join(dir, file);
+      if (fs.statSync(fullPath).isDirectory()) {
+        getFiles(fullPath); // Recurse into subdirectories
+      } else if (file.endsWith(".md")) {
+        const fileContents = fs.readFileSync(fullPath, "utf-8");
+        const { data, content } = matter(fileContents);
 
-            // Generate the correct path with no duplication
-            element.path = `/@jessefreeman/foam-eleventy-mvp.main/apps/code-server/proxy/8080/${slug}`; // Avoid leading slashes
-          });
-
-          resolve({ posts: result.rss.channel[0].item });
+        // Generate a clean path relative to /posts/
+        posts.push({
+          title: data.title,
+          date: data.date,
+          tags: data.tags || [],
+          content,
+          path: `/posts/${data.date.toISOString().split("T")[0]}/${file
+            .replace(postsDir, "")
+            .replace(/\\/g, "/")
+            .replace(/\/\d{4}-\d{2}-\d{2}\//, "") // Remove date folders
+            .replace(".md", "")}`, // Keep slug only
         });
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+        
+        
+      }
+    });
+  };
+
+  getFiles(postsDir);
+
+  posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  return {
+    posts,
+  };
 };
