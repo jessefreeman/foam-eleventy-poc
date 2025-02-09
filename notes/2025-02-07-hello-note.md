@@ -1,12 +1,12 @@
 ---
 title: "Hello Note"
 date: 2025-02-07
-tags: [note, unsorted]
+tags: [[not]], unsorted]
 ---
 
 # Hello Note
 
-[Describe what you're working on]
+[[Describe what you're working on]]
 
 ## What am I trying to accomplish?
 
