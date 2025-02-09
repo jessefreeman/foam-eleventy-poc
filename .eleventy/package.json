@@ -12,15 +12,12 @@
     "build": "gulp build && eleventy"
   },
   "dependencies": {
-    "@11ty/eleventy": "0.5.3",
-    "axios": "^0.18.0",
+    "@11ty/eleventy": "^3.0.0",
+    "clean-css": "^5.3.3",
     "cssnano": "^4.1.0",
-    "glob": "^11.0.1",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",
-    "image-size": "^1.2.0",
     "markdown-it": "^14.1.0",
-    "precss": "^3.1.2",
-    "xml2js": "^0.4.19"
+    "precss": "^3.1.2"
   }
 }
