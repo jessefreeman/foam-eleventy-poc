@@ -3,11 +3,11 @@ layout: layouts/base.njk
 title: Articles
 ---
 
-<h1>All Posts</h1>
+<h1>All notes</h1>
 
 <ul class="listing">
-  {% for item in medium.posts %}
-    <li class="post-preview">
+  {% for item in notebook.notes %}
+    <li class="note-preview">
       <p class="meta">{{ item.date | date('D MMM YYYY') }} | {{ item.readTime }}</p>
       <h2>
         <a href="{{ item.path | url }}">{{ item.title }}</a>

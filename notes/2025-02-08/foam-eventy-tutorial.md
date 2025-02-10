@@ -2,7 +2,7 @@
 layout: layouts/base.njk
 title: "Foam Eventy Tutorial"
 date: 2025-02-08
-tags: [blog, unsorted]
+tags: [blog, unsorted, public]
 ---
 ## Setting Up Foam with Eleventy for Blogging
 

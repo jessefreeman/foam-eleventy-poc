@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 pagination:
-  data: medium.posts
+  data: notebook.notes
   size: 1
   alias: item
 permalink: "{{ item.path }}/index.html"
@@ -9,6 +9,6 @@ permalink: "{{ item.path }}/index.html"
 
 <p class="meta">Published on {{ item.date | date('friendly') }}</p>
 <h2>{{ item.title }}</h2>
-<div class="post-content">
+<div class="note-content">
   {{ item.content | safe }}
 </div>

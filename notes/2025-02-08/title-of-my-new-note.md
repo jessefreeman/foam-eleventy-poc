@@ -2,7 +2,8 @@
 layout: layouts/base.njk
 title: "Title of my New Note"
 date: 2025-02-08
-tags: [blog, unsorted]
+public: no
+tags: [blog, unsorted, public]
 ---
 
 *Originally written on 2025-02-08*
