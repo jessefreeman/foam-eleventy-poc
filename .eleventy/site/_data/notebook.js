@@ -2,33 +2,18 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const markdownIt = require("markdown-it");
+const removeMd = require("remove-markdown");
 const md = new markdownIt();
 
 const notesDir = path.resolve(__dirname, "../../../notes");
 
-// Function to generate an excerpt
-function generateExcerpt(content, wordLimit = 30) {
-  const words = content.split(/\s+/).slice(0, wordLimit).join(" ");
-  return words + "...";
-}
+// Function to generate an excerpt with a summary fallback
+function generateExcerpt(data, content, wordLimit = 30) {
+  if (data.summary?.trim()) return data.summary.trim(); // Use summary if available
 
-// Helper: copy images referenced in HTML
-function copyReferencedImages(html, noteSourceDir, noteOutputDir) {
-  const imageRegex = /<img[^>]+src=["']([^"']+)["']/g;
-  let match;
-  while ((match = imageRegex.exec(html)) !== null) {
-    const imgSrc = match[1];
-    if (!imgSrc.startsWith("http")) {
-      const srcImage = path.join(noteSourceDir, imgSrc);
-      const destImage = path.join(noteOutputDir, imgSrc);
-      fs.mkdirSync(path.dirname(destImage), { recursive: true });
-      try {
-        fs.copyFileSync(srcImage, destImage);
-      } catch (err) {
-        console.error(`Failed to copy ${srcImage} to ${destImage}:`, err);
-      }
-    }
-  }
+  const firstBlock = content.split(/\n\s*\n/)[0]; // Get the first paragraph
+  const cleanText = removeMd(firstBlock.replace(/!\[.*?\]\(.*?\)/g, "")); // Remove images & Markdown
+  return cleanText.split(/\s+/).slice(0, wordLimit).join(" ") + "...";
 }
 
 module.exports = () => {
@@ -42,23 +27,16 @@ module.exports = () => {
       } else if (file.endsWith(".md")) {
         const fileContents = fs.readFileSync(fullPath, "utf-8");
         const { data, content } = matter(fileContents);
-        
-        // Ensure tags exist and filter out non-public notes
-        if (!data.tags || !data.tags.includes("public")) return;
 
-        // Remove the "public" tag from the list
-        const filteredTags = data.tags.filter(tag => tag !== "public");
-
-        const renderedHtml = md.render(content || ""); 
-        const excerpt = generateExcerpt(content);
+        if (!data.tags?.includes("public")) return; // Skip non-public notes
 
         notes.push({
           title: data.title,
           date: data.date,
-          tags: filteredTags, // Public tag is removed
-          excerpt: generateExcerpt(content),
+          tags: data.tags.filter(tag => tag !== "public"), // Remove "public" tag
+          excerpt: generateExcerpt(data, content),
           readTime: Math.ceil(content.split(" ").length / 200) + " min read",
-          content: renderedHtml,
+          content: md.render(content || ""),
           path: `./notes/${data.date.toISOString().split("T")[0]}/${file.replace(".md", "")}/`
         });
       }

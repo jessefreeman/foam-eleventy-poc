@@ -127,3 +127,20 @@ pre {
   padding-left: 1em;
   padding-right: 1em;
 }
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 1.5em;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #007acc;
+}
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5em;
+}

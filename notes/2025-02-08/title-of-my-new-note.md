@@ -1,5 +1,4 @@
 ---
-layout: layouts/base.njk
 title: "Title of my New Note"
 date: 2025-02-08
 public: no
