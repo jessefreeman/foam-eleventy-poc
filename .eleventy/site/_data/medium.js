@@ -43,17 +43,18 @@ module.exports = () => {
       } else if (file.endsWith(".md")) {
         const fileContents = fs.readFileSync(fullPath, "utf-8");
         const { data, content } = matter(fileContents);
-        const renderedHtml = md.render(content);
+        const renderedHtml = md.render(content || ""); // Ensure empty content doesn't break it
         const excerpt = generateExcerpt(content);
 
         posts.push({
           title: data.title,
           date: data.date,
           tags: data.tags || [],
-          excerpt: excerpt,
+          excerpt: generateExcerpt(content),
           readTime: Math.ceil(content.split(" ").length / 200) + " min read",
+          content: renderedHtml, // Ensure this is included
           path: `./posts/${data.date.toISOString().split("T")[0]}/${file.replace(".md", "")}/`
-        });
+        });        
       }
     });
   };
