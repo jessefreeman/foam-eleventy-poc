@@ -1,6 +1,12 @@
 module.exports = function(eleventyConfig) {
-  // Add custom filters
-  eleventyConfig.addFilter("date", require("./filters/dates.js"));
+
+  eleventyConfig.addFilter("formatDate", date =>
+    new Date(date).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    })
+  );
 
   // Custom `map` filter to map a specific property in objects
   eleventyConfig.addFilter("map", function(array, property) {
@@ -22,7 +28,7 @@ module.exports = function(eleventyConfig) {
   });
 
   // Make pathPrefix available in templates
-  const pathPrefix = "/@jessefreeman/foam-eleventy-mvp.main/apps/code-server/proxy/8080/";
+  const pathPrefix = "/@jessefreeman/foam-eleventy-mvp.main/apps/code-server/proxy/8081/";
   eleventyConfig.addGlobalData("pathPrefix", pathPrefix);
 
   return {

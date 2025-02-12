@@ -10,7 +10,7 @@ permalink: "{{ item.path }}/index.html"
 {{url}}
 <h1>{{ item.title }}</h1>
 <p class="meta">
-  Published on {{ item.date | date('MMMM D, YYYY') }} · {{ item.readTime }}
+  Published on {{ item.date | formatDate }} · {{ item.readTime }}
 </p>
 
 <div class="note-content">
