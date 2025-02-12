@@ -5,15 +5,17 @@ $verygentletext: #888;
 $heavytext: #111;
 $pagecolor: #fff;
 
-
 html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   color: $bodytext;
   font-size: 16px;
   line-height: 1.6;
@@ -28,30 +30,36 @@ body {
 a:link,
 a:visited {
   color: #222;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
+/* Header & Footer */
 header,
 footer {
-  padding-top: 2em;
-  padding-bottom: 2em;
-  margin-bottom: 4em;
+  padding: 2em 0;
   font-size: 0.7em;
   color: $gentletext;
 }
 header {
-  border-bottom: solid 1px $feather;
+  border-bottom: 1px solid $feather;
 }
 footer {
-  margin-top: 6em;
-  border-top: solid 1px $feather;
+  border-top: 1px solid $feather;
+  margin-top: auto;
+  margin-bottom: 4em;
 }
 
-
+/* Container */
 .container {
-  width: 90%;
+  flex: 1;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+  width: 90%;
+  font-size: 1rem;
 }
 @media (min-width: 800px) {
   .container {
@@ -59,50 +67,57 @@ footer {
   }
 }
 
+/* Horizontal Rule */
 hr {
-  border-style: none;
-  border-bottom: solid 1px $feather;
-  margin-top: 2em;
-  margin-bottom: 3em;
+  border: none;
+  border-bottom: 1px solid $feather;
+  margin: 2em 0 3em;
 }
 
+/* Post Content */
 .post-content img {
   max-width: 100%;
   height: auto;
 }
 
+/* Meta Text */
 p.meta {
   color: $bodytext;
   font-size: 0.8em;
 }
 
+/* Listing Styles */
 ul.listing {
   list-style: none;
-  list-style-position: outside;
-  padding-top: 1em;
   padding-left: 0;
-  li {
-    margin-bottom: 3em;
-  }
-  h3 {
-    padding-top:0;
-    margin-top:0;
-  }
-  p.meta {
-    padding-bottom:0.5em;
-    margin-bottom:0;
-  }
+}
+ul.listing li {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1em;
+}
+ul.listing h2 {
+  margin: 0 0 0.5em;
+}
+ul.listing .excerpt {
+  margin: 0.5em 0;
+  color: #333;
 }
 
-
-h1,h2,h3,h4 {
+/* Headings */
+h1, h2, h3, h4 {
   font-family: sans-serif;
   line-height: 1.1;
   color: $heavytext;
 }
 
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
 h2 {
-  font-size: 34px;
+  font-size: 1.5em;
+  margin: 0.5em 0;
   letter-spacing: -.01em;
   small {
     font-size: 0.5em;
@@ -110,14 +125,13 @@ h2 {
     color: $gentletext;
   }
 }
-
 h3 {
   margin-top: 2em;
 }
 
+/* Figures */
 figure {
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
 }
 figcaption {
   text-align: center;
@@ -125,26 +139,48 @@ figcaption {
   font-size: 0.7em;
 }
 
+/* Blockquotes */
 blockquote {
   font-style: italic;
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0;
   margin-left: -2em;
-  padding-left: 2em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-left: solid 3px $gentletext;
+  padding: 0.5em 0 0.5em 2em;
+  border-left: 3px solid $gentletext;
   em {
     font-style: normal;
   }
 }
 
+/* Preformatted Text */
 pre {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: 1em;
-  padding-right: 1em;
+  margin: 0;
+  padding: 0 1em;
   background-color: $feather;
   font-size: 0.7em;
   overflow-x: scroll;
+}
+
+/* Additional Button & Tag Styles */
+.back-button,
+.tag-button {
+  display: inline-block;
+  margin-right: 0.5em;
+  font-size: 1rem;
+  color: #007acc;
+  text-decoration: none;
+}
+.back-button:hover,
+.tag-button:hover {
+  text-decoration: underline;
+}
+.tag-button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Extra Meta Class */
+.meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1em;
 }

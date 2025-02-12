@@ -1,8 +1,7 @@
 ---
 title: "Title of my New Note"
 date: 2025-02-08
-public: no
-tags: [template, blog, unsorted, public]
+tags: [template, blog, public]
 ---
 
 *Originally written on 2025-02-08*

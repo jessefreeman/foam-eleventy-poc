@@ -11,6 +11,10 @@ module.exports = function(eleventyConfig) {
     return array.map(item => item[property]);
   });
   
+  eleventyConfig.addPassthroughCopy({
+    "site/_includes/css/styles.css": "css/styles.css"
+  });
+
   // Custom `flatten` filter to flatten nested arrays
   eleventyConfig.addFilter("flatten", function(array) {
     return array.flat();
@@ -30,7 +34,6 @@ module.exports = function(eleventyConfig) {
       input: "site",
       output: "_site",
       data: "_data"
-    },
-    feed: process.env.MEDIUM_FEED || "https://medium.com/feed/netlify"
+    }
   };
 };

@@ -3,49 +3,40 @@ layout: layouts/base.njk
 title: Articles
 ---
 
-<h1>All Notes</h1>
+<h1>Notebook</h1>
 
-<!-- Tag Filters -->
-<div class="tags">
-  <a href="?tag=all" class="tag-button">All</a>
-  {% for tag in notebook.notes | map("tags") | flatten | unique %}
-    <a href="?tag={{ tag }}" class="tag-button">#{{ tag }}</a>
-  {% endfor %}
-</div>
+<section class="tags">
+  <div>
+    {% set allTags = notebook.notes | map("tags") | flatten | unique %}
+    {% for tag in allTags %}
+      {% set count = notebook.tagCounts[tag] %}
+      <a href="?tag={{ tag }}" class="tag-button">#{{ tag }} ({{ count }})</a>
+    {% endfor %}
+  </div>
+</section>
 
-<ul class="listing">
-  {% for item in notebook.notes %}
-    <li class="note-preview" data-tags="{{ item.tags | join(',') }}">
-      <p class="meta">{{ item.date | date('D MMM YYYY') }} | {{ item.readTime }}</p>
-      <h2>
-        <a href="{{ item.path | url }}">{{ item.title }}</a>
-      </h2>
-      
-      <p class="excerpt">{{ item.excerpt }}</p>
-      <a href="{{ item.path | url }}">Read Article</a>
-    </li>
-  {% endfor %}
-</ul>
+<section class="posts">
+  <ul class="post-list">
+    {% for note in notebook.notes %}
+      <li class="post" data-tags="{{ note.tags | join(',') }}">
+        <span class="post-date">{{ note.date }}</span>
+        <span class="post-title">
+          <a href="{{ note.path }}">{{ note.title }}</a>
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
 <script>
-  // Get the "tag" query parameter
   const urlParams = new URLSearchParams(window.location.search);
-  const tag = urlParams.get('tag') || 'all';
-
-  // Highlight the selected tag button
-  document.querySelectorAll('.tag-button').forEach(button => {
-    if (button.href.includes(`?tag=${tag}`)) {
-      button.classList.add('active');
-    }
-  });
-
-  // Filter posts based on the selected tag
-  document.querySelectorAll('.note-preview').forEach(post => {
-    const postTags = post.getAttribute('data-tags').split(',');
-    if (tag === 'all' || postTags.includes(tag)) {
-      post.style.display = 'block';
-    } else {
-      post.style.display = 'none';
-    }
-  });
+  const tag = urlParams.get('tag');
+  if (tag) {
+    document.querySelectorAll('.post').forEach(post => {
+      const postTags = post.getAttribute('data-tags').split(',');
+      if (!postTags.includes(tag)) {
+        post.style.display = 'none';
+      }
+    });
+  }
 </script>

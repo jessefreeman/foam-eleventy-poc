@@ -2,7 +2,6 @@
 title: "Setting Up Foam with Eleventy for Blogging"
 date: 2025-02-08
 tags: [blog, unsorted, public]
-summary: Set up a blog with Foam and Eleventy by cloning the Foam template, installing Node.js and npm, and configuring post paths for organized storage. Create the necessary folder structure, define a default layout, and set up an Eleventy config file to process posts and static assets. Add styles, configure Node.js, install Eleventy, and run the server to generate and preview posts in the _site folder.
 ---
 
 This tutorial walks you through setting up a blogging system using Foam and Eleventy. Follow these steps to reproduce the setup.
