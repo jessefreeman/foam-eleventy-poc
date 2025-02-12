@@ -7,8 +7,8 @@ const { exec } = require("child_process");
 /*
   Generate the CSS with PostCSS
 */
-gulp.task('css', function () {
-  return gulp.src('css/**/*.css')
+gulp.task('scss', function () {
+  return gulp.src('css/**/*.scss')
     .pipe(postcss([precss, cssnano]))
     .pipe(gulp.dest('site/_includes/css'));
 });
@@ -28,7 +28,7 @@ gulp.task("eleventy", function (cb) {
   Watch folders for changes
 */
 gulp.task("watch", function() {
-  gulp.watch('css/**/*.css', gulp.parallel('css'));
+  gulp.watch('css/**/*.scss', gulp.parallel('scss'));
   gulp.watch('/workspace/notes/**/*.md', gulp.series('eleventy'));
 });
 
@@ -36,6 +36,6 @@ gulp.task("watch", function() {
   Build task
 */
 gulp.task('build', gulp.series(
-  'css',
+  'scss',
   'eleventy'
 ));
