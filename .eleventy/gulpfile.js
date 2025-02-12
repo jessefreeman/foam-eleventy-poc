@@ -1,5 +1,6 @@
 const gulp = require("gulp");
 const postcss = require("gulp-postcss");
+const sass = require("gulp-sass")(require("sass"));
 const precss = require('precss');
 const cssnano = require('cssnano');
 const { exec } = require("child_process");
@@ -9,7 +10,8 @@ const { exec } = require("child_process");
 */
 gulp.task('scss', function () {
   return gulp.src('css/**/*.scss')
-    .pipe(postcss([precss, cssnano]))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(postcss([cssnano]))
     .pipe(gulp.dest('site/_includes/css'));
 });
 

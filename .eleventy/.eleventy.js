@@ -15,7 +15,7 @@ module.exports = function(eleventyConfig) {
   
   eleventyConfig.addPassthroughCopy({
     "site/_includes/css/styles.css": "css/styles.css"
-  });
+  });  
 
   // Custom `flatten` filter to flatten nested arrays
   eleventyConfig.addFilter("flatten", function(array) {
@@ -28,7 +28,7 @@ module.exports = function(eleventyConfig) {
   });
 
   // Make pathPrefix available in templates
-  const pathPrefix = "/@jessefreeman/foam-eleventy-mvp.main/apps/code-server/proxy/8081/";
+  const pathPrefix = "/@jessefreeman/foam-eleventy-mvp.main/apps/code-server/proxy/8081";
   eleventyConfig.addGlobalData("pathPrefix", pathPrefix);
 
   return {
