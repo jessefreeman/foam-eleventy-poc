@@ -1,18 +1,18 @@
 const gulp = require("gulp");
-const postcss = require("gulp-postcss");
-const sass = require("gulp-sass")(require("sass"));
-const precss = require('precss');
-const cssnano = require('cssnano');
 const { exec } = require("child_process");
+const fs = require("fs");
+const path = require("path");
 
 /*
-  Generate the CSS with PostCSS
+  Delete the _site folder
 */
-gulp.task('scss', function () {
-  return gulp.src('css/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([cssnano]))
-    .pipe(gulp.dest('site/_includes/css'));
+gulp.task("clean", function (cb) {
+  const sitePath = path.resolve(__dirname, "_site");
+  if (fs.existsSync(sitePath)) {
+    fs.rmSync(sitePath, { recursive: true, force: true });
+    console.log("_site folder deleted.");
+  }
+  cb();
 });
 
 /*
@@ -30,14 +30,13 @@ gulp.task("eleventy", function (cb) {
   Watch folders for changes
 */
 gulp.task("watch", function() {
-  gulp.watch('css/**/*.scss', gulp.parallel('scss'));
-  gulp.watch('/workspace/notes/**/*.md', gulp.series('eleventy'));
+  gulp.watch('/workspace/notes/**/*.md', gulp.series("eleventy"));
 });
 
 /*
   Build task
 */
-gulp.task('build', gulp.series(
-  'scss',
-  'eleventy'
+gulp.task("build", gulp.series(
+  "clean",  // Clean the _site folder first
+  "eleventy" // Then run Eleventy
 ));
