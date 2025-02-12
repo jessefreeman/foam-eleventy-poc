@@ -1,11 +1,11 @@
 {
-  "name": "MediumExport",
+  "name": "Not Another Notebook Theme",
   "version": "1.0.0",
-  "author": "Phil Hawksworth",
+  "author": "Jesse Freeman",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/philhawksworth/medium-export"
+    "url": "https://github.com/jessefreeman/nan-theme"
   },
   "scripts": {
     "start": "gulp watch & eleventy --serve",
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "clean-css": "^5.3.3",
     "cssnano": "^4.1.0",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",

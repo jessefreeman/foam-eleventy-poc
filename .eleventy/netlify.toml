@@ -1,6 +1,0 @@
-[build]
-  command = "yarn run build"
-  publish = "dist"
-
-[template.environment]
-  MEDIUM_FEED = "The URL of the Medium feed to pull in"

@@ -1,7 +1,3 @@
-const CleanCSS = require("clean-css");
-const postcss = require("postcss");
-const precss = require("precss");
-
 module.exports = function(eleventyConfig) {
   // Add custom filters
   eleventyConfig.addFilter("date", require("./filters/dates.js"));
