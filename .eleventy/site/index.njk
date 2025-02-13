@@ -19,7 +19,7 @@ title: Articles
   <ul class="post-list">
     {% for note in notebook.notes %}
       <li class="post" data-tags="{{ note.tags | join(',') }}">
-        <span class="post-date">{{ note.date }}</span>
+        <span class="post-date">{{ note.date | shortDate }}</span>
         <span class="post-title">
           <a href=".{{ note.path }}">{{ note.title }}</a>
         </span>
