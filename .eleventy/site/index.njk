@@ -21,7 +21,7 @@ title: Articles
       <li class="post" data-tags="{{ note.tags | join(',') }}">
         <span class="post-date">{{ note.date }}</span>
         <span class="post-title">
-          <a href="{{ note.path }}">{{ note.title }}</a>
+          <a href=".{{ note.path }}">{{ note.title }}</a>
         </span>
       </li>
     {% endfor %}

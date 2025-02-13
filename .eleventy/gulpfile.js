@@ -2,6 +2,7 @@ const gulp = require("gulp");
 const { exec } = require("child_process");
 const fs = require("fs");
 const path = require("path");
+const config = require("./config");
 
 /*
   Delete the _site folder
@@ -10,7 +11,7 @@ gulp.task("clean", function (cb) {
   const sitePath = path.resolve(__dirname, "_site");
   if (fs.existsSync(sitePath)) {
     fs.rmSync(sitePath, { recursive: true, force: true });
-    console.log("_site folder deleted.");
+    console.log(`${sitePath} folder deleted.`);
   }
   cb();
 });
@@ -30,7 +31,7 @@ gulp.task("eleventy", function (cb) {
   Watch folders for changes
 */
 gulp.task("watch", function() {
-  gulp.watch('/workspace/notes/**/*.md', gulp.series("eleventy"));
+  gulp.watch(`${config.paths.notes}/**/*.md`, gulp.series("eleventy"));
 });
 
 /*
