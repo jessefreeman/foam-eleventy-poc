@@ -152,3 +152,39 @@ pre {
   font-size: 0.9rem;
   margin-bottom: 1em;
 }
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em; /* Adds padding between date and post name */
+  padding: 0.5em 0;
+}
+
+.post-date {
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: #444; /* Matches the post and tag style */
+}
+
+.post-title {
+  flex-grow: 1;
+  font-size: 1rem;
+  color: #444; /* Matches the post and tag style */
+}
+
+.post-title a {
+  color: #444;
+  text-decoration: none;
+}
+
+.post-title a:hover {
+  text-decoration: underline;
+}
+/*Test*/
