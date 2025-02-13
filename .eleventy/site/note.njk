@@ -5,10 +5,9 @@ pagination:
   size: 1
   alias: item
 permalink: "{{ item.path }}/index.html"
+eleventyComputed:
+  title: "{{ item.title }}"
 ---
-<a href="{{ pathPrefix }}/index.html" class="back-button">← Back</a>
-{{url}}
-<h1>{{ item.title }}</h1>
 <p class="meta">
   Published on {{ item.date | formatDate }} · {{ item.readTime }}
 </p>

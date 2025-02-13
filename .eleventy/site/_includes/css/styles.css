@@ -1,117 +1,70 @@
-body,
-html {
-  height: 100%;
+/* Reset & Base */
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
 }
 body {
   display: flex;
   flex-direction: column;
   text-align: center;
-  font-family: Georgia, Cambria, Times New Roman, Times, serif;
-  color: #444;
-  font-size: 16px;
-  line-height: 1.6;
 }
 @media (min-width: 800px) {
-  body {
-    font-size: 20px;
-  }
+  body { font-size: 20px; }
 }
-a:link,
-a:visited {
+
+/* Links */
+a:link, a:visited {
   color: #222;
   text-decoration: none;
 }
-a:hover {
-  text-decoration: underline;
+a:hover { 
+  text-decoration: underline; 
 }
-footer,
+
 header {
-  padding: 2em 0;
-  font-size: 0.7em;
-  color: #888;
-}
-header {
-  border-bottom: 1px solid #eee;
+  position: relative;
+  padding: 0;
 }
 footer {
-  border-top: 1px solid #eee;
   margin-top: auto;
-  margin-bottom: 4em;
+  padding: 2em 0;
+  font-size: 0.5em;
 }
+
+/* Container */
 .container {
   flex: 1;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   text-align: left;
   width: 90%;
   font-size: 1rem;
 }
 @media (min-width: 800px) {
-  .container {
-    width: 700px;
-  }
+  .container { width: 700px; }
 }
+
+/* Elements */
 hr {
   border: none;
   border-bottom: 1px solid #eee;
   margin: 2em 0 3em;
 }
-.post-content img {
-  max-width: 100%;
-  height: auto;
-}
 p.meta {
   color: #444;
   font-size: 0.8em;
 }
-ul.listing {
-  list-style: none;
-  padding-left: 0;
-}
-ul.listing li {
-  margin-bottom: 2em;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 1em;
-}
-ul.listing h2 {
-  margin: 0 0 0.5em;
-}
-ul.listing .excerpt {
-  margin: 0.5em 0;
-  color: #333;
-}
-h1,
-h2,
-h3,
-h4 {
-  font-family: sans-serif;
-  line-height: 1.1;
-  color: #111;
-}
-h1 {
-  font-size: 2em;
-  margin-bottom: 0.5em;
-}
-h2 {
-  font-size: 1.5em;
-  margin: 0.5em 0;
-  letter-spacing: -0.01em;
-}
-h2 small {
-  font-size: 0.5em;
-  font-weight: 400;
-  color: #888;
-}
-h3 {
-  margin-top: 2em;
-}
-figure {
+
+/* Figures & Blockquotes */
+figure, figcaption {
   margin: 0;
+  text-align: center;
 }
 figcaption {
-  text-align: center;
   color: #888;
   font-size: 0.7em;
 }
@@ -124,13 +77,68 @@ blockquote {
 blockquote em {
   font-style: normal;
 }
+
+/* Preformatted Text */
 pre {
   margin: 0;
   padding: 0 1em;
   background-color: #eee;
   font-size: 0.7em;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: sans-serif;
+  line-height: 1.1;
+  color: #111;
+  margin: 0;
+}
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  padding-top: 2.5rem; /* Reserve space for back button */
+}
+h2 {
+  font-size: 1.5em;
+  margin: 0.5em 0;
+  letter-spacing: -0.01em;
+}
+h2 small {
+  font-size: 0.5em;
+  font-weight: 400;
+  color: #888;
+}
+h3 { 
+  margin-top: 2em; 
+}
+
+/* Lists */
+ul.listing, .note-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul.listing li {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1em;
+}
+ul.listing h2 { 
+  margin: 0 0 0.5em; 
+}
+ul.listing .excerpt {
+  margin: 0.5em 0;
+  color: #333;
+}
+
+/* Images */
+.note-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Buttons */
 .back-button,
 .tag-button {
   display: inline-block;
@@ -138,53 +146,54 @@ pre {
   font-size: 1rem;
   color: #007acc;
   text-decoration: none;
+  margin-top: 2em;
 }
 .back-button:hover,
-.tag-button.active,
-.tag-button:hover {
+.tag-button:hover,
+.tag-button.active {
   text-decoration: underline;
 }
 .tag-button.active {
   font-weight: 700;
 }
+
+/* Additional Meta */
 .meta {
   color: #666;
   font-size: 0.9rem;
-  margin-bottom: 1em;
-}
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  margin-bottom: 3em;
 }
 
-.post {
+/* Note List Items */
+.note {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  gap: 1em; /* Adds padding between date and post name */
+  gap: 1em;
   padding: 0.5em 0;
 }
-
-.post-date {
-  flex-shrink: 0;
+.note-date,
+.note-title {
   font-size: 1rem;
-  color: #444; /* Matches the post and tag style */
-}
-
-.post-title {
-  flex-grow: 1;
-  font-size: 1rem;
-  color: #444; /* Matches the post and tag style */
-}
-
-.post-title a {
   color: #444;
+}
+.note-title {
+  flex-grow: 1;
+}
+.note-title a {
+  color: inherit;
   text-decoration: none;
 }
-
-.post-title a:hover {
+.note-title a:hover {
   text-decoration: underline;
 }
-/*Test*/
+
+/* Back Button Container */
+.back-button-container {
+  min-height: 2.5rem;
+  position: relative;
+}
+.back-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

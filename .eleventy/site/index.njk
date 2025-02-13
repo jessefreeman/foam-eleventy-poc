@@ -1,9 +1,7 @@
 ---
 layout: layouts/base.njk
-title: Articles
+title: Notebook
 ---
-
-<h1>Notebook</h1>
 
 <section class="tags">
   <div>
@@ -15,12 +13,12 @@ title: Articles
   </div>
 </section>
 
-<section class="posts">
-  <ul class="post-list">
+<section class="notes">
+  <ul class="note-list">
     {% for note in notebook.notes %}
-      <li class="post" data-tags="{{ note.tags | join(',') }}">
-        <span class="post-date">{{ note.date | shortDate }}</span>
-        <span class="post-title">
+      <li class="note" data-tags="{{ note.tags | join(',') }}">
+        <span class="note-date">{{ note.date | shortDate }}</span>
+        <span class="note-title">
           <a href=".{{ note.path }}">{{ note.title }}</a>
         </span>
       </li>
@@ -32,10 +30,10 @@ title: Articles
   const urlParams = new URLSearchParams(window.location.search);
   const tag = urlParams.get('tag');
   if (tag) {
-    document.querySelectorAll('.post').forEach(post => {
-      const postTags = post.getAttribute('data-tags').split(',');
-      if (!postTags.includes(tag)) {
-        post.style.display = 'none';
+    document.querySelectorAll('.note').forEach(note => {
+      const noteTags = note.getAttribute('data-tags').split(',');
+      if (!noteTags.includes(tag)) {
+        note.style.display = 'none';
       }
     });
   }
