@@ -30,7 +30,7 @@ This tutorial walks you through setting up a blogging system using Foam and Elev
 ### Step 3: Create the Folder Structure
 Establish the following folder structure:
 
-```
+```text
 /workspace
   posts/             <-- Markdown posts
   .eleventy/         <-- Config, _layouts, _includes, assets

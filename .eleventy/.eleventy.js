@@ -3,7 +3,8 @@ const path = require("path");
 const fs = require("fs");
 const matter = require("gray-matter");
 const MarkdownIt = require("markdown-it");
-const md = new MarkdownIt();
+const md = new MarkdownIt().use(require("markdown-it-prism"));
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 
 // Helper: format a date to yyyy-mm-dd
 const getDateString = (date) => {
@@ -60,7 +61,7 @@ const getNotebook = () => {
       const dateString = getDateString(data.date);
       const renderedHtml = md.render(content || "");
 
-      // Copy images
+      // Copy images referenced in the note
       const sourceDir = path.dirname(filePath);
       const noteSlug = path.basename(filePath, ".md");
       const noteOutputDir = path.join(outputDir, "notes", dateString, noteSlug);
@@ -89,8 +90,10 @@ const getNotebook = () => {
 };
 
 module.exports = function (eleventyConfig) {
-  
-  // Filters
+  // Add the syntax highlighting plugin
+  eleventyConfig.addPlugin(syntaxHighlight);
+
+  // Add filters
   eleventyConfig.addFilter("formatDate", (date) =>
     new Date(date).toLocaleDateString("en-US", {
       month: "long",
@@ -109,18 +112,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("flatten", (array) => array.flat());
   eleventyConfig.addFilter("unique", (array) => [...new Set(array)]);
 
-  // Passthrough copy for CSS
-  eleventyConfig.addPassthroughCopy({
-    "site/_includes/css/styles.css": "css/styles.css"
-  }); 
-
   // Global data
   eleventyConfig.addGlobalData("pathPrefix", config.paths.baseURL);
 
-  // Notebook collection and global notebook data
-  const notebookData = getNotebook();
-  eleventyConfig.addCollection("notebook", () => notebookData.notes);
-  eleventyConfig.addGlobalData("notebook", notebookData);
+  // Notebook collection and global notebook data (delayed execution)
+  eleventyConfig.addCollection("notebook", () => {
+    return getNotebook().notes;
+  });
+  eleventyConfig.addGlobalData("notebook", () => getNotebook());
 
   return {
     dir: {
