@@ -122,6 +122,10 @@ module.exports = function (eleventyConfig) {
     return filtered;
   });
   
+  eleventyConfig.addPassthroughCopy({
+    "site/_includes/js": "js"
+  });
+  
   eleventyConfig.addFilter("map", (array, property) => array.map(item => item[property]));
   eleventyConfig.addFilter("flatten", (array) => array.flat());
   eleventyConfig.addFilter("unique", (array) => [...new Set(array)]);

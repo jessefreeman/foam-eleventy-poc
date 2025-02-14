@@ -1,64 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>`Not Another Notebook {{ title }}`</title>
-
-    <link rel="stylesheet" href="{{ pathPrefix }}/css/styles.min.css?v=1ddadcdd 2345dddd1811">
-    <link rel="stylesheet" href="{{ pathPrefix }}/css/prism.min.css?v=02112111112">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Not Another Notebook {{ title }}</title>
+    <link rel="stylesheet" href="{{ pathPrefix }}/css/styles.min.css?v=1dmdadd2345dddd1811" />
+    <link rel="stylesheet" href="{{ pathPrefix }}/css/prism.min.css?v=02112111112" />
   </head>
   <body>
     <div class="container">
-      <header>
-        <div class="back-button-container">
-          {% if page.url != "/" and page.url != "/index.html" %}
-            <a href="{{ pathPrefix }}/index.html" class="back-button">← Back</a>
-          {% endif %}
-        </div>
-        <div class="title-area">
-          <h1>{{ title }}</h1>
-          
-          {% macro renderTags(tags, showAll) %}
-            {% set sortedTagsList = tags | sortedTags(showAll) %}
-            <section class="tags">
-              <div>
-                {% for tag in sortedTagsList %}
-                  {% if showAll or (tag != "all" and tag != "public") %}
-                    <a href="{{ pathPrefix }}/index.html?tag={{ tag }}" class="tag-button">
-                      #{{ tag }} ({{ notebook.tagCounts[tag] }})
-                    </a>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </section>
-          {% endmacro %}
-
-          {% if item %}
-            {# Note page: render only the note's tags #}
-            {{ renderTags(item.tags, false) }}
-          {% else %}
-            {# Index page: render all tags #}
-            {% set allTags = notebook.notes | map("tags") | flatten | unique %}
-            {{ renderTags(allTags, true) }}
-          {% endif %}
-
-          <p class="meta">
-            {% if page.url != "/" and page.url != "/index.html" %}
-              Published on {{ item.date | formatDate }} · {{ item.readTime }}
-            {% else %}
-              This is a collection of all the public notebook pages.
-            {% endif %}
-          </p>
-        </div>
-      </header>
+      {% include "layouts/header.njk" %}
       {{ content | safe }}
     </div>
-    <footer>
-      <div class="container">
-        NaN Theme by <a href="#">Jesse Freeman</a>.
-      </div>
-    </footer>
+    {% include "layouts/footer.njk" %}
   </body>
 </html>

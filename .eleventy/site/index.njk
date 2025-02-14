@@ -16,29 +16,6 @@ title: Notebook
   </ul>
 </section>
 
-<script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const tag = urlParams.get('tag');
-  if (tag) {
-    document.querySelectorAll('.note').forEach(note => {
-      const noteTags = note.getAttribute('data-tags').split(',');
-      if (!noteTags.includes(tag)) {
-        note.style.display = 'none';
-      }
-    });
-  }
-</script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const activeTag = urlParams.get('tag');
-    if (activeTag) {
-      document.querySelectorAll('.tag-button').forEach(btn => {
-        if(btn.getAttribute('href').includes(`tag=${activeTag}`)) {
-          btn.classList.add('active');
-        }
-      });
-    }
-  });
-</script>
+<script src="{{ pathPrefix }}/js/filterNotes.js"></script>
+<script src="{{ pathPrefix }}/js/highlightTag.js?=1"></script>

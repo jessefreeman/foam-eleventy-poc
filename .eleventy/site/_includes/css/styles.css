@@ -35,6 +35,11 @@ footer {
   padding: 2em 0;
 }
 
+footer .container {
+  text-align: right;
+  font-size: .8rem;
+}
+
 /* Container */
 .container {
   flex: 1;
@@ -145,6 +150,10 @@ ul.listing .excerpt {
   line-height: 1.5;
 }
 
+.tags {
+  margin-bottom: 1em;
+}
+
 /* Buttons */
 .back-button,
 .tag-button {
@@ -173,7 +182,7 @@ ul.listing .excerpt {
 .meta {
   color: #666;
   font-size: 0.9rem;
-  margin-bottom: 3em;
+  margin-bottom: 1em;
 }
 
 /* Note List Items */

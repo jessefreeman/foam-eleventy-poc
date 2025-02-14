@@ -1,0 +1,14 @@
+{% macro renderTags(tags, showAll) %}
+  {% set sortedTagsList = tags | sortedTags(showAll) %}
+  <section class="tags">
+    <div>
+      {% for tag in sortedTagsList %}
+        {% if showAll or (tag != "all" and tag != "public") %}
+          <a href="{{ pathPrefix }}/index.html?tag={{ tag }}" class="tag-button">
+            #{{ tag }} ({{ notebook.tagCounts[tag] }})
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+{% endmacro %}

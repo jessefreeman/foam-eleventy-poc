@@ -1,0 +1,26 @@
+{% set isIndex = (page.url == "/" or page.url == "/index.html") %}
+{% import "macros/tags.njk" as tags with context %}
+
+<header>
+  <div class="back-button-container">
+    {% if not isIndex %}
+      <a href="{{ pathPrefix }}/index.html" class="back-button">← Back</a>
+    {% endif %}
+  </div>
+  <div class="title-area">
+    <h1>{{ title }}</h1>
+    <p class="meta">
+      {% if not isIndex %}
+        Published on {{ item.date | formatDate }} · {{ item.readTime }}
+      {% else %}
+        This is a collection of all the public notebook pages.
+      {% endif %}
+    </p>
+    {% if item %}
+      {{ tags.renderTags(item.tags, false) }}
+    {% else %}
+      {% set allTags = notebook.notes | map("tags") | flatten | unique %}
+      {{ tags.renderTags(allTags, true) }}
+    {% endif %}
+  </div>
+</header>
