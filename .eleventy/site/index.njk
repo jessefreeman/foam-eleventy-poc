@@ -28,3 +28,17 @@ title: Notebook
     });
   }
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTag = urlParams.get('tag');
+    if (activeTag) {
+      document.querySelectorAll('.tag-button').forEach(btn => {
+        if(btn.getAttribute('href').includes(`tag=${activeTag}`)) {
+          btn.classList.add('active');
+        }
+      });
+    }
+  });
+</script>

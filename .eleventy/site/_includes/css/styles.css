@@ -33,7 +33,6 @@ header {
 footer {
   margin-top: auto;
   padding: 2em 0;
-  font-size: 0.5em;
 }
 
 /* Container */
@@ -167,7 +166,7 @@ ul.listing .excerpt {
   text-decoration: underline;
 }
 .tag-button.active {
-  font-weight: 700;
+  text-decoration: underline;
 }
 
 /* Additional Meta */
