@@ -8,9 +8,6 @@ permalink: "{{ item.path }}/index.html"
 eleventyComputed:
   title: "{{ item.title }}"
 ---
-<p class="meta">
-  Published on {{ item.date | formatDate }} · {{ item.readTime }}
-</p>
 
 <div class="note-content">
   {{ item.content | safe }}

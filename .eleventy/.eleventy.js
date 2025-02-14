@@ -108,6 +108,20 @@ module.exports = function (eleventyConfig) {
     const year = d.getFullYear();
     return `${day}-${month}-${year}`;
   });
+
+  eleventyConfig.addFilter("sortedTags", (tags, showAll) => {
+    let filtered = tags;
+    if (!showAll) {
+      filtered = tags.filter(t => t !== "all" && t !== "public");
+    }
+    filtered = [...filtered].sort();
+    if (showAll && tags.includes("all")) {
+      filtered = filtered.filter(t => t !== "all");
+      filtered.unshift("all");
+    }
+    return filtered;
+  });
+  
   eleventyConfig.addFilter("map", (array, property) => array.map(item => item[property]));
   eleventyConfig.addFilter("flatten", (array) => array.flat());
   eleventyConfig.addFilter("unique", (array) => [...new Set(array)]);

@@ -3,16 +3,6 @@ layout: layouts/base.njk
 title: Notebook
 ---
 
-<section class="tags">
-  <div>
-    {% set allTags = notebook.notes | map("tags") | flatten | unique %}
-    {% for tag in allTags %}
-      {% set count = notebook.tagCounts[tag] %}
-      <a href="?tag={{ tag }}" class="tag-button">#{{ tag }} ({{ count }})</a>
-    {% endfor %}
-  </div>
-</section>
-
 <section class="notes">
   <ul class="note-list">
     {% for note in notebook.notes %}

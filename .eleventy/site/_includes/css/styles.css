@@ -57,6 +57,7 @@ hr {
 p.meta {
   color: #444;
   font-size: 0.8em;
+  height: 20px;
 }
 
 /* Figures & Blockquotes */
@@ -138,6 +139,13 @@ ul.listing .excerpt {
   height: auto;
 }
 
+.tag {
+  display: inline-block;
+  margin-right: 0.5em;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 /* Buttons */
 .back-button,
 .tag-button {
@@ -146,8 +154,13 @@ ul.listing .excerpt {
   font-size: 1rem;
   color: #007acc;
   text-decoration: none;
+  margin-left: 0em;
+}
+
+.back-button {
   margin-top: 2em;
 }
+
 .back-button:hover,
 .tag-button:hover,
 .tag-button.active {
@@ -196,4 +209,8 @@ ul.listing .excerpt {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.title-area {
+  min-height: 100px;
 }
