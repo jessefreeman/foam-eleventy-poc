@@ -2,7 +2,6 @@
 layout: layouts/base.njk
 title: Notebook
 ---
-
 <section class="notes">
   <ul class="note-list">
     {% for note in notebook.notes %}
@@ -15,7 +14,6 @@ title: Notebook
     {% endfor %}
   </ul>
 </section>
-
 
 <script src="{{ pathPrefix }}/js/filterNotes.js"></script>
 <script src="{{ pathPrefix }}/js/highlightTag.js?=1"></script>

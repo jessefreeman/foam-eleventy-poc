@@ -8,7 +8,7 @@
     "url": "https://github.com/jessefreeman/nan-theme"
   },
   "scripts": {
-    "start": "gulp build && gulp watch & eleventy --serve",
+    "start": "gulp clean && npx eleventy --serve",
     "build": "gulp build && eleventy"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "markdown-it-prism": "^2.3.0"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "del": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-rename": "^2.0.0"

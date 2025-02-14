@@ -1,15 +1,12 @@
 ---
-foam_template:
-  name: Developer Note
-  description: A template for private developer notes.
-  filepath: "notes/$FOAM_DATE_YEAR-$FOAM_DATE_MONTH-$FOAM_DATE_DATE/$FOAM_SLUG.md"
-title: "$FOAM_TITLE"
-date: $FOAM_DATE_YEAR-$FOAM_DATE_MONTH-$FOAM_DATE_DATE
+title: "New Private Dev Note"
+date: 2025-02-14
 tags:
   - unsorted
+  - public
 ---
 
-# $FOAM_TITLE
+# New Private Dev Notes
 
 [Describe what you're working on]
 
@@ -51,4 +48,4 @@ Enter code here
 
 - **Previous Note:** [[previous-note]] (Update this manually)
 
-Note Created: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}
+Note Created: 2025-02-14
