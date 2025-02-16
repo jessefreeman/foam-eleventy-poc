@@ -8,16 +8,19 @@
     "url": "https://github.com/jessefreeman/nan-theme"
   },
   "scripts": {
-    "start": "gulp clean && npx eleventy --serve",
+    "start": "gulp watch-and-serve",
     "build": "gulp build && eleventy"
   },
   "dependencies": {
     "@11ty/eleventy": "^3.0.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "clean-css": "^5.3.3",
+    "cssnano": "^7.0.6",
     "gulp": "^4.0.0",
+    "gulp-postcss": "^10.0.0",
     "markdown-it": "^14.1.0",
-    "markdown-it-prism": "^2.3.0"
+    "markdown-it-prism": "^2.3.0",
+    "precss": "^4.0.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
