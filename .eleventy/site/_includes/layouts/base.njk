@@ -14,26 +14,5 @@
       {{ content | safe }}
     </div>
     {% include "layouts/footer.njk" %}
-
-        <script>
-  const wsProtocol = location.protocol === "https:" ? "wss:" : "ws:";
-  const ws = new WebSocket(wsProtocol + '//' + location.host + location.pathname);
-
-  ws.onmessage = (message) => {
-    if (message.data === 'reload') {
-      console.log("Reloading page...");
-      location.reload();
-    }
-  };
-
-  ws.onclose = () => {
-    console.warn("WebSocket connection closed.");
-  };
-
-  ws.onerror = (err) => {
-    console.error("WebSocket error:", err);
-  };
-</script>
-
   </body>
 </html>

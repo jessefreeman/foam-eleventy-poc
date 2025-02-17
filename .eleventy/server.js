@@ -8,6 +8,21 @@ const { exec } = require("child_process");
 const PORT = 5500;
 const WATCH_DIR = path.join(__dirname, "_site");
 
+const reloadScript = `
+<script>
+  const wsProtocol = location.protocol === "https:" ? "wss:" : "ws:";
+  const ws = new WebSocket(wsProtocol + '//' + location.host + location.pathname);
+  ws.onmessage = (message) => {
+    if (message.data === 'reload') {
+      console.log("Reloading page...");
+      location.reload();
+    }
+  };
+  ws.onclose = () => { console.warn("WebSocket connection closed."); };
+  ws.onerror = (err) => { console.error("WebSocket error:", err); };
+</script>
+`;
+
 const server = http.createServer((req, res) => {
   const urlObj = new URL(req.url, `http://${req.headers.host}`);
   const pathname = urlObj.pathname;
@@ -20,15 +35,26 @@ const server = http.createServer((req, res) => {
       return res.end("404 Not Found");
     }
 
+    const sendContent = (content, contentType) => {
+      if (contentType === "text/html") {
+        if (content.includes("</body>")) {
+          content = content.replace("</body>", reloadScript + "</body>");
+        } else {
+          content += reloadScript;
+        }
+      }
+      res.writeHead(200, { "Content-Type": contentType });
+      res.end(content);
+    };
+
     if (stats.isDirectory()) {
       const indexFilePath = path.join(filePath, "index.html");
-      fs.readFile(indexFilePath, (err, content) => {
+      fs.readFile(indexFilePath, "utf8", (err, content) => {
         if (err) {
           res.writeHead(404, { "Content-Type": "text/plain" });
           return res.end("404 Not Found");
         }
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(content);
+        sendContent(content, "text/html");
       });
     } else {
       const ext = path.extname(filePath).toLowerCase();
@@ -37,8 +63,19 @@ const server = http.createServer((req, res) => {
       else if (ext === ".css") contentType = "text/css";
       else if (ext === ".js") contentType = "application/javascript";
       else if (ext.match(/\.(png|jpg|jpeg|gif|svg)$/)) contentType = "image/" + ext.substring(1);
-      res.writeHead(200, { "Content-Type": contentType });
-      fs.createReadStream(filePath).pipe(res);
+
+      if (contentType === "text/html") {
+        fs.readFile(filePath, "utf8", (err, content) => {
+          if (err) {
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            return res.end("404 Not Found");
+          }
+          sendContent(content, contentType);
+        });
+      } else {
+        res.writeHead(200, { "Content-Type": contentType });
+        fs.createReadStream(filePath).pipe(res);
+      }
     }
   });
 });
