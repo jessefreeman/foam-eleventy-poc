@@ -9,12 +9,10 @@ const PORT = 5500;
 const WATCH_DIR = path.join(__dirname, "_site");
 
 const server = http.createServer((req, res) => {
-  // Use URL to strip query parameters
-  const { pathname } = new URL(req.url, `http://${req.headers.host}`);
-  const filePath = path.join(
-    WATCH_DIR,
-    pathname.endsWith("/") ? `${pathname}index.html` : pathname
-  );
+  const urlObj = new URL(req.url, `http://${req.headers.host}`);
+  const pathname = urlObj.pathname;
+  const effectivePath = req.url.endsWith("/") ? `${pathname}index.html` : pathname;
+  const filePath = path.join(WATCH_DIR, effectivePath);
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats) {
@@ -35,15 +33,10 @@ const server = http.createServer((req, res) => {
     } else {
       const ext = path.extname(filePath).toLowerCase();
       let contentType = "text/plain";
-      if (ext === ".html") {
-        contentType = "text/html";
-      } else if (ext === ".css") {
-        contentType = "text/css";
-      } else if (ext === ".js") {
-        contentType = "application/javascript";
-      } else if (ext.match(/\.(png|jpg|jpeg|gif|svg)$/)) {
-        contentType = "image/" + ext.substring(1);
-      }
+      if (ext === ".html") contentType = "text/html";
+      else if (ext === ".css") contentType = "text/css";
+      else if (ext === ".js") contentType = "application/javascript";
+      else if (ext.match(/\.(png|jpg|jpeg|gif|svg)$/)) contentType = "image/" + ext.substring(1);
       res.writeHead(200, { "Content-Type": contentType });
       fs.createReadStream(filePath).pipe(res);
     }
@@ -51,17 +44,35 @@ const server = http.createServer((req, res) => {
 });
 
 const wss = new WebSocket.Server({ server });
+
+// Heartbeat mechanism
+function heartbeat() {
+  this.isAlive = true;
+}
+
 wss.on("connection", (ws) => {
+  ws.isAlive = true;
+  ws.on("pong", heartbeat);
   console.log("WebSocket connection established.");
   ws.on("close", () => console.log("WebSocket connection closed."));
 });
 
+const interval = setInterval(() => {
+  wss.clients.forEach((ws) => {
+    if (!ws.isAlive) return ws.terminate();
+    ws.isAlive = false;
+    ws.ping();
+  });
+}, 30000);
+
+wss.on("close", () => {
+  clearInterval(interval);
+});
+
 const watcher = chokidar.watch(WATCH_DIR, { ignoreInitial: true });
 let buildInProgress = false;
-
 watcher.on("change", (changedPath) => {
   console.log(`File changed: ${changedPath}`);
-
   if (!buildInProgress) {
     buildInProgress = true;
     exec("npx eleventy", (err, stdout, stderr) => {

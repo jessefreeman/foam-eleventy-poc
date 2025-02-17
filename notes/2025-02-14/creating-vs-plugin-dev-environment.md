@@ -3,6 +3,7 @@ title: "Creating VS Plugin Dev Environment"
 date: 2025-02-14
 tags:
   - unsorted
+  - public
 ---
 
 # Creating VS Plugin Dev Environment

@@ -4,18 +4,21 @@ const precss = require("precss");
 const cssnano = require("cssnano");
 const { exec } = require("child_process");
 const path = require("path");
+const cleanCSS = require("gulp-clean-css");
+const rename = require("gulp-rename");
 
-const WATCH_DIR = path.join(__dirname, "_site");
-
-// Generate CSS with PostCSS
+// CSS task: process CSS files located in site/_includes/css
 gulp.task("css", function () {
-  return gulp
-    .src("css/**/*.css")
-    .pipe(postcss([precss, cssnano]))
-    .pipe(gulp.dest("site/_includes/css"));
+  return gulp.src("site/_includes/css/*.css")
+    .pipe(cleanCSS({ compatibility: "ie8" }, (details) => {
+      console.log(`${details.name}: Original: ${details.stats.originalSize} bytes, Minified: ${details.stats.minifiedSize} bytes`);
+    }))
+    .pipe(rename({ suffix: ".min" }))
+    .pipe(gulp.dest("_site/css"))
+    .on("end", () => console.log("CSS minification complete."));
 });
 
-// Rebuild Eleventy when markdown files change
+// Eleventy task: rebuild the site
 gulp.task("eleventy", function (cb) {
   exec("npx eleventy", function (err, stdout, stderr) {
     console.log(stdout);
@@ -24,16 +27,16 @@ gulp.task("eleventy", function (cb) {
   });
 });
 
-// Watch files for changes
+// Watch task: watch for changes in CSS and markdown files
 gulp.task("watch", function () {
-  gulp.watch("css/**/*.css", gulp.series("css"));
+  gulp.watch("site/_includes/css/**/*.css", gulp.series("css"));
   gulp.watch("/workspace/notes/**/*.md", gulp.series("eleventy"));
 });
 
-// Build everything
-gulp.task("build", gulp.series("css", "eleventy"));
+// Build task: run CSS then Eleventy
+gulp.task("build", gulp.series("eleventy", "css"));
 
-// Live-reload server task (runs server.js)
+// Serve task: start the live-reload server (server.js should be in the same folder)
 gulp.task("serve", function (cb) {
   const child = exec("node server.js", (err, stdout, stderr) => {
     console.log(stdout);
@@ -45,5 +48,5 @@ gulp.task("serve", function (cb) {
   cb();
 });
 
-// Build first, then watch and serve
+// Watch-and-serve task: build first, then run serve and watch in parallel
 gulp.task("watch-and-serve", gulp.series("build", gulp.parallel("serve", "watch")));
